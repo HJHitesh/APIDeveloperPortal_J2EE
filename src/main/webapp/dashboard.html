@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Control Panel</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4; /* Light gray background */
+	margin: 0;
+	padding: 20px;
+}
+
+.navbar {
+	background-color: #ffeb3b; /* Yellow for navbar */
+	padding: 10px;
+	text-align: right;
+}
+
+.navbar a {
+	color: black; /* Black text for visibility */
+	text-decoration: none;
+	padding: 10px 15px;
+	border-radius: 4px;
+	transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+	background-color: #fbc02d; /* Slightly darker yellow on hover */
+}
+
+.control-panel-container {
+	background-color: white;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	max-width: 600px;
+	margin: 20px auto;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.key-list {
+	margin-bottom: 20px;
+}
+
+.key-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-bottom: 10px;
+	background-color: #f9f9f9;
+}
+
+.key-item button {
+	padding: 5px 10px;
+	background-color: #ffeb3b; /* Yellow for deactivate button */
+	border: none;
+	color: black; /* Black text for visibility */
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.key-item button:hover {
+	background-color: #fbc02d; /* Slightly darker yellow on hover */
+}
+
+.new-key-btn {
+	padding: 10px;
+	background-color: #ffeb3b; /* Yellow for new key button */
+	border: none;
+	border-radius: 4px;
+	color: black; /* Black text for visibility */
+	font-size: 16px;
+	cursor: pointer;
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.new-key-btn:hover {
+	background-color: #fbc02d; /* Slightly darker yellow on hover */
+}
+
+footer {
+	text-align: center;
+	margin-top: 20px;
+	font-size: 14px;
+	color: #555;
+}
+</style>
+</head>
+<body>
+	<div class="navbar">
+		<a href="#">Home</a> <a href="#">Profile</a> <a href="#">Settings</a>
+		<a href="login.html">Logout</a>
+		<!-- Logout button -->
+	</div>
+
+	<div class="control-panel-container">
+		<h2>User Control Panel</h2>
+
+		<div class="key-list">
+			<h3>Your API Keys</h3>
+			<div id="apiKeysContainer"></div>
+			
+			<form method="post" action="DashboardServlet">
+				<input type="hidden" name="action" value="create">
+				<button type="submit" class="new-key-btn">Generate New API
+					Key</button>
+			</form>
+		</div>
+	</div>
+
+	<footer>
+		APIManager Web J2EE @ <a href="https://www.linkedin.com/in/jhahitesh/"
+			target="_blank">Hitesh Jha</a>
+	</footer>
+
+	<script>
+	const apiKeys = [];
+
+    const container = document.getElementById('apiKeysContainer');
+    apiKeys.forEach(key => {
+        const keyItem = document.createElement('div');
+        keyItem.className = 'key-item';
+        keyItem.innerHTML = `
+            <span>${key.apiKey}</span>
+            <form method="post" action="DashboardServlet">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" value="${key.id}">
+                <button type="submit">Deactivate</button>
+            </form>
+        `;
+        container.appendChild(keyItem);
+    });
+    </script>
+</body>
+</html>
